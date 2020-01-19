@@ -40,11 +40,15 @@ const CenteredP = styled.p`
 
 const CenterDiv = styled.div`
   margin: auto;
-  margin-top: 35vh;
   text-align: center;
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 90vw;
+  margin-top: 10vh;
+  @media screen and (min-width: 1025px) {
+    width: 30vw;
+    margin-top: 35vh;
+  }
   & > * {
     margin: 6px;
   }

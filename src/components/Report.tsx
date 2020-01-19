@@ -5,10 +5,20 @@ import axios from "axios";
 
 const Article = styled.article`
   margin: 48px auto;
-  width: 45vw;
+  width: 100vw;
+  @media screen and (min-width: 1025px) {
+    width: 45vw;
+  }
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Markdown = styled.div`
+  margin: 24px;
+  @media screen and (min-width: 1025px) {
+    margin: 64px;
+  }
 `;
 
 export interface ReportProps {
@@ -38,11 +48,11 @@ const Report: React.FC<ReportProps> = ({ avatar, text }) => {
   return (
     <Article>
       <Avatar src={avatar} size={64} mb="4" />
-      <BorderBox width="100%" p="8">
-        <div
+      <BorderBox width="100%">
+        <Markdown
           className="markdown-body"
           dangerouslySetInnerHTML={{ __html: rendered }}
-        ></div>
+        ></Markdown>
       </BorderBox>
     </Article>
   );
