@@ -5,7 +5,9 @@ import {
   TextInput,
   ButtonPrimary,
   Flash,
-  Box
+  Box,
+  StyledOcticon,
+  Button
 } from "@primer/components";
 import { ApolloProvider, useLazyQuery } from "@apollo/react-hooks";
 import client from "./api";
@@ -14,9 +16,15 @@ import { All, AllVariables } from "./types";
 import Report from "./components/Report";
 import { Info, getInfo } from "./data";
 import { generateReport } from "./templates/en";
+import { Trashcan } from "@primer/octicons-react";
 
 const BigHeading = styled.h1`
   color: white;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const CenterDiv = styled.div`
@@ -32,7 +40,11 @@ const CenterDiv = styled.div`
 `;
 
 const App: React.FC = () => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") ?? "");
+
+  useEffect(() => {
+    localStorage.setItem("token", token);
+  }, [token]);
 
   const [queryAll, { loading, data, error }] = useLazyQuery<All, AllVariables>(
     QUERY_ALL
@@ -46,6 +58,11 @@ const App: React.FC = () => {
           to: new Date("2020-01-01").toISOString()
         }
       });
+    } else {
+      window.open(
+        "https://github.com/settings/tokens/new?description=GitHub%20Annual%20Report%20Generator&scopes=repo",
+        "_blank"
+      );
     }
   };
 
@@ -84,12 +101,17 @@ const App: React.FC = () => {
 
         setTimeout(() => {
           scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-        }, 1000);
+        }, 1500);
       })();
     }
   }, [data, error, loading]);
 
   const md = useMemo(() => (info ? generateReport(2019, info) : ""), [info]);
+
+  const handleRemove = () => {
+    setToken("");
+    localStorage.removeItem("token");
+  };
 
   return (
     <BaseStyles>
@@ -97,19 +119,28 @@ const App: React.FC = () => {
         <BigHeading>GitHub Annual Report Generator</BigHeading>
       </Box>
       <CenterDiv>
-        {token && (
+        <FlexDiv>
           <TextInput
+            block
             variant="large"
-            placeholder="GitHub Access Token"
-            defaultValue={token}
+            placeholder="GitHub Personal Access Token"
+            value={token}
+            onChange={e => setToken(e.target.value)}
           />
-        )}
+          <Button ml="2" onClick={handleRemove}>
+            <StyledOcticon icon={Trashcan} size={28} color="red.5" />
+          </Button>
+        </FlexDiv>
         <ButtonPrimary
           variant="large"
-          disabled={loading || (data ? true : false)}
+          disabled={
+            (token ? true : false) && (loading || (data ? true : false))
+          }
           onClick={handleGenerate}
         >
-          Generate GitHub Annual Report
+          {token
+            ? "Generate GitHub Annual Report"
+            : "Get Personal Access Token"}
         </ButtonPrimary>
         {message.text && <Flash scheme={message.scheme}>{message.text}</Flash>}
       </CenterDiv>
