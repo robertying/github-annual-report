@@ -17,6 +17,7 @@ import Report from "./components/Report";
 import { Info, getInfo } from "./data";
 import { generateReport } from "./templates/en";
 import { Trashcan } from "@primer/octicons-react";
+import GitHubButton from "react-github-btn";
 
 const BigHeading = styled.h1`
   color: white;
@@ -25,6 +26,16 @@ const BigHeading = styled.h1`
 const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CenteredP = styled.p`
+  text-align: center;
+  font-size: 10pt;
+  font-style: italic;
+  color: grey;
+  padding-top: 24px;
 `;
 
 const CenterDiv = styled.div`
@@ -116,7 +127,17 @@ const App: React.FC = () => {
   return (
     <BaseStyles>
       <Box bg="#24292e" py={3} px={6}>
-        <BigHeading>GitHub Annual Report Generator</BigHeading>
+        <FlexDiv>
+          <BigHeading>GitHub Annual Report Generator</BigHeading>
+          <GitHubButton
+            href="https://github.com/robertying/github-annual-report"
+            data-size="large"
+            data-show-count
+            aria-label="Star robertying/github-annual-report on GitHub"
+          >
+            Star
+          </GitHubButton>
+        </FlexDiv>
       </Box>
       <CenterDiv>
         <FlexDiv>
@@ -143,6 +164,13 @@ const App: React.FC = () => {
             : "Get Personal Access Token"}
         </ButtonPrimary>
         {message.text && <Flash scheme={message.scheme}>{message.text}</Flash>}
+        <CenteredP>
+          Disclaimer
+          <br />
+          This site does not store your personal access token or any other
+          personal information. This is an open source project. You may use this
+          site at your own discretion.
+        </CenteredP>
       </CenterDiv>
       <div ref={scrollRef} />
       {info && <Report avatar={info.avatarUrl} text={md} />}
