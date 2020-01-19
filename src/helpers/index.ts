@@ -70,21 +70,21 @@ export const getIssueCount = (
   repositories: All_viewer_contributionsCollection_issueContributionsByRepository[]
 ) => {
   const c = repositories.map(i => i.contributions.totalCount);
-  return c.reduce((pre, cur) => pre + cur);
+  return c.reduce((pre, cur) => pre + cur, 0);
 };
 
 export const getPullRequestCount = (
   repositories: All_viewer_contributionsCollection_pullRequestContributionsByRepository[]
 ) => {
   const c = repositories.map(i => i.contributions.totalCount);
-  return c.reduce((pre, cur) => pre + cur);
+  return c.reduce((pre, cur) => pre + cur, 0);
 };
 
 export const getPullRequestReviewCount = (
   repositories: All_viewer_contributionsCollection_pullRequestReviewContributionsByRepository[]
 ) => {
   const c = repositories.map(i => i.contributions.totalCount);
-  return c.reduce((pre, cur) => pre + cur);
+  return c.reduce((pre, cur) => pre + cur, 0);
 };
 
 export const getPushEventMaxTime = (events: any[]) => {
