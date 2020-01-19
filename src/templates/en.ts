@@ -4,7 +4,7 @@ import { Info } from "../data";
 
 export const generateReport = (year: number, i: Info) => `
 
-# Rui Ying's GitHub Annual Report
+# ${i.name ?? i.login}'s GitHub Annual Report
 
 In year _${year}_, you've created **${i.newRepositoryCount}** ${pluralize(
   "new repository",

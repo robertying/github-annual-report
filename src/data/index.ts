@@ -9,6 +9,8 @@ import {
 } from "../helpers";
 
 export interface Info {
+  login: string;
+  name: string | null;
   avatarUrl: string;
   newRepositoryCount: number;
   contributionCount: number;
@@ -47,6 +49,8 @@ export const getInfo = async (root: All_viewer) => {
   );
 
   const i: Info = {
+    login: root.login,
+    name: root.name,
     avatarUrl: root.avatarUrl,
     newRepositoryCount:
       contributionsCollection.repositoryContributions.totalCount,

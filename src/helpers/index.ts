@@ -49,7 +49,6 @@ export const getMaxContributionDayAndCount = (
 ) => {
   const w = weeks.map(w => w.contributionDays).flat(1);
   const ww = w.sort((a, b) => b.contributionCount - a.contributionCount);
-  console.log(ww);
   return [ww[0]?.date, ww[0]?.contributionCount];
 };
 
