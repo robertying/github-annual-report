@@ -23,57 +23,78 @@ In year _${year}_, you've created **${i.newRepositoryCount}** ${pluralize(
   i.maxContributionPerDay
 )}, marking itself as the most fruitful day of _${year}_.
 
+${
+  i.topCommitRepositories.length >= 1
+    ? `
 ## Commits
 
 Your commits mostly went to ${generateEnglishListing(
-  i.topCommitRepositories
-)}. On **${i.maxCommitDay?.format("MMM D")}**, you made **${
-  i.maxCommitPerDayForRepository
-}** ${pluralize("commit", i.maxCommitPerDayForRepository)} to \`${
-  i.topCommitRepositories[0]
-}\` and you have accumulatively committed **${
-  i.commitCountForTopRepository
-}** ${pluralize("time", i.commitCountForTopRepository)} to this repository.
+        i.topCommitRepositories
+      )}. On **${i.maxCommitDay?.format("MMM D")}**, you made **${
+        i.maxCommitPerDayForRepository
+      }** ${pluralize("commit", i.maxCommitPerDayForRepository)} to \`${
+        i.topCommitRepositories[0]
+      }\` and you have accumulatively committed **${
+        i.commitCountForTopRepository
+      }** ${pluralize(
+        "time",
+        i.commitCountForTopRepository
+      )} to this repository.
+    `
+    : ""
+}
 
+${
+  i.issueCount >= 1
+    ? `
 ## Issues
 
 The most popular issue you have created was \`${i.popularIssue}\` in \`${
-  i.popularIssueRepository
-}\`, which has **${i.popularIssueParticipantCount}** ${pluralize(
-  "participant",
-  i.popularIssueParticipantCount
-)} and **${i.popularIssueReplyCount}** ${pluralize(
-  "reply",
-  i.popularIssueReplyCount
-)}.
+        i.popularIssueRepository
+      }\`, which has **${i.popularIssueParticipantCount}** ${pluralize(
+        "participant",
+        i.popularIssueParticipantCount
+      )} and **${i.popularIssueReplyCount}** ${pluralize(
+        "reply",
+        i.popularIssueReplyCount
+      )}.
 
 Throughout _${year}_, you have opened **${i.issueCount}** ${pluralize(
-  "issue",
-  i.issueCount
-)} in ${generateEnglishListing(i.topIssueRepositories)}, etc.
+        "issue",
+        i.issueCount
+      )} in ${generateEnglishListing(i.topIssueRepositories)}, etc.
+`
+    : ""
+}
 
+${
+  i.topPullRequestRepositories.length >= 1
+    ? `
 ## Pull Requests
 
 You worked very hard on the pull request \`${i.popularPullRequest}\` in \`${
-  i.popularPullRequestRepository
-}\`. It contains **${i.popularPullRequestCommitCount}** ${pluralize(
-  "commit",
-  i.popularPullRequestCommitCount
-)} and received **${i.popularPullRequestReviewCount}** ${pluralize(
-  "review",
-  i.popularPullRequestReviewCount
-)}.
+        i.popularPullRequestRepository
+      }\`. It contains **${i.popularPullRequestCommitCount}** ${pluralize(
+        "commit",
+        i.popularPullRequestCommitCount
+      )} and received **${i.popularPullRequestReviewCount}** ${pluralize(
+        "review",
+        i.popularPullRequestReviewCount
+      )}.
 
 \`${
-  i.topPullRequestRepositories[0]
-}\` and other repositories have benefited from your **${
-  i.pullRequestCount
-}** ${pluralize(
-  "pull request",
-  i.pullRequestCount
-)}. You also made others' work better by giving **${
-  i.pullRequestReviewCount
-}** ${pluralize("pull request review", i.pullRequestReviewCount)}.
+        i.topPullRequestRepositories[0]
+      }\` and other repositories have benefited from your **${
+        i.pullRequestCount
+      }** ${pluralize(
+        "pull request",
+        i.pullRequestCount
+      )}. You also made others' work better by giving **${
+        i.pullRequestReviewCount
+      }** ${pluralize("pull request review", i.pullRequestReviewCount)}.
+`
+    : ""
+}
 
 ## Community
 
